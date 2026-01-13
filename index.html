@@ -144,25 +144,30 @@ h1 {
 
 <script>
 // ⏰ تحديد أقرب ساعة 12
-function getNext12() {
+function getNextMidnight() {
   const now = new Date();
   const target = new Date();
 
-  target.setHours(12, 0, 0, 0);
+  // الهدف: 12 بالليل
+  target.setHours(0, 0, 0, 0);
+
+  // لو عدينا 12 بالليل → نحسب لبكرة
   if (now >= target) {
     target.setDate(target.getDate() + 1);
   }
+
   return target;
 }
 
-const targetTime = getNext12();
+const targetTime = getNextMidnight();
+
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = targetTime.getTime() - now;
 
   if (distance <= 0) {
     document.getElementById("countdown").style.display = "none";
-    document.getElementById("message").innerHTML = "🎉 It’s 12 O’Clock! 🎉";
+    document.getElementById("message").innerHTML = "🎉 It’s Midnight! 🎉";
     document.getElementById("message").className = "message";
     return;
   }
@@ -184,7 +189,7 @@ function updateCountdown() {
   document.getElementById("seconds").innerText = seconds;
 }
 
-
+// تشغيل العدّ
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
